@@ -44,14 +44,22 @@ namespace RetrogradeJam.Entities.Components
             return _animations[animationName];
         }
 
-        public void Play(string animationName)
+        public void Play(string animationName, bool fromFirstFrame = false)
         {
             Animation anim = GetAnimation(animationName);
 
+            if (_currentIndex > anim.Frames - 1 || fromFirstFrame) {
+                _currentIndex = 0;
+            }
+
             _currentAnimation = anim;
-            _currentIndex = anim.StartIndex;
             _animationSpeed = anim.Speed;
             _isAnimating = true;
+        }
+
+        public void Pause()
+        {
+            _isAnimating = false;
         }
 
         public void SetTexture(Texture2D texture)
@@ -72,7 +80,17 @@ namespace RetrogradeJam.Entities.Components
             if (_isAnimating) {
                 _animationTimer += (float) gameTime.ElapsedGameTime.TotalMilliseconds;
 
-                _sourceRectangle.X = _sourceRectangle.Width * _currentIndex;
+                if (_animationTimer > _currentAnimation.Speed) {
+                    _animationTimer = 0;
+
+                    _currentIndex++;
+
+                    if (_currentIndex > _currentAnimation.Frames - 1) {
+                        _currentIndex = 0;
+                    }
+                }
+
+                _sourceRectangle.X = _sourceRectangle.Width * (_currentIndex + _currentAnimation.StartIndex);
             }
 
             _destinationRectangle.X = (int) _transform.Position.X;

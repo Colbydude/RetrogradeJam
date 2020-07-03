@@ -65,7 +65,7 @@ namespace RetrogradeJam
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, _graphicsScale);
+            _spriteBatch.Begin(SpriteSortMode.Immediate, null, SamplerState.PointClamp, null, null, null, _graphicsScale);
 
                 _entityManager.Draw(_spriteBatch, gameTime);
 

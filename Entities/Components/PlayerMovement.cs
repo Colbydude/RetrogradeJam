@@ -9,10 +9,13 @@ namespace RetrogradeJam.Entities.Components
     {
         private const float MOVE_SPEED = 30f;
 
+        private int _direction;
+        private Sprite _sprite;
         private Transform _transform;
 
         public override void Initialize()
         {
+            _sprite = Entity.GetComponent<Sprite>();
             _transform = Entity.GetComponent<Transform>();
         }
 
@@ -20,6 +23,17 @@ namespace RetrogradeJam.Entities.Components
         {
             float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
 
+            UpdateFacing();
+            Movement(deltaTime);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        {
+            //
+        }
+
+        private void Movement(float deltaTime)
+        {
             int holdL, holdR, holdU, holdD;
             float speed;
 
@@ -52,11 +66,35 @@ namespace RetrogradeJam.Entities.Components
                 _transform.Position.X += moveVector.X * deltaTime;
                 _transform.Position.Y += moveVector.Y * deltaTime;
             }
+
+            switch (holdL + holdR + holdU + holdD) {
+                case 0:
+                    _sprite.Pause();
+                break;
+                case 1:
+                    _direction = (Constants.Direction.Left) * holdL +
+                                 (Constants.Direction.Up) * holdU +
+                                 (Constants.Direction.Down) * holdD;
+                break;
+                default:
+                    switch (_direction) {
+                        case 180: if (holdR == 1) { _direction = Constants.Direction.Right; } break;
+                        case 0: if (holdL == 1) { _direction = Constants.Direction.Left; } break;
+                        case 90: if (holdD == 1) { _direction = Constants.Direction.Right; } break;
+                        default: if (holdU == 1) { _direction = Constants.Direction.Up; } break;
+                    }
+                break;
+            }
         }
 
-        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        private void UpdateFacing()
         {
-            //
+            switch (_direction) {
+                case 180: _sprite.Play("WalkLeft"); break;
+                case 0: _sprite.Play("WalkRight"); break;
+                case 90: _sprite.Play("WalkUp"); break;
+                default: _sprite.Play("WalkDown"); break;
+            }
         }
     }
 }
