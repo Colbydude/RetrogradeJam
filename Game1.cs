@@ -1,16 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RetrogradeJam.Entities;
+using RetrogradeJam.Entities.Components;
 
 namespace RetrogradeJam
 {
     public class Game1 : Game
     {
+        private EntityManager _entityManager;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
         public Game1()
         {
+            _entityManager = new EntityManager();
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -18,7 +22,14 @@ namespace RetrogradeJam
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            // @TEMP
+            Texture2D whiteRectangle = new Texture2D(_graphics.GraphicsDevice, 1, 1);
+            whiteRectangle.SetData(new[] { Color.White });
+
+            Entity testEntity = _entityManager.AddEntity("test");
+
+            testEntity.AddComponent<TransformComponent>(new TransformComponent(new Vector2(5, 5), new Vector2(1, 1), new Vector2(8, 8)));
+            testEntity.AddComponent<SpriteComponent>(new SpriteComponent(whiteRectangle, 32, 32));
 
             base.Initialize();
         }
@@ -32,10 +43,11 @@ namespace RetrogradeJam
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) {
                 Exit();
+            }
 
-            // TODO: Add your update logic here
+            _entityManager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -44,7 +56,11 @@ namespace RetrogradeJam
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+
+                _entityManager.Draw(_spriteBatch, gameTime);
+
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
