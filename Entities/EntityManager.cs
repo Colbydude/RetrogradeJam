@@ -27,6 +27,8 @@ namespace RetrogradeJam.Entities
             _entities.ForEach(entity => {
                 entity.Update(gameTime);
             });
+
+            _entities.RemoveAll(e => !e.IsActive);
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)

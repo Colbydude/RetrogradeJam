@@ -46,6 +46,11 @@ namespace RetrogradeJam.Entities
             return _componentTypeMap.ContainsKey(typeof(T));
         }
 
+        public virtual void Destroy()
+        {
+            IsActive = false;
+        }
+
         public virtual void Update(GameTime gameTime)
         {
             _components.ForEach(component => {

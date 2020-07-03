@@ -28,8 +28,8 @@ namespace RetrogradeJam
 
             Entity testEntity = _entityManager.AddEntity("test");
 
-            testEntity.AddComponent<TransformComponent>(new TransformComponent(new Vector2(5, 5), new Vector2(1, 1), new Vector2(8, 8)));
-            testEntity.AddComponent<SpriteComponent>(new SpriteComponent(whiteRectangle, 32, 32));
+            testEntity.AddComponent<Transform>(new Transform(new Vector2(5, 5), new Vector2(1, 1), new Vector2(8, 8)));
+            testEntity.AddComponent<Sprite>(new Sprite(whiteRectangle, 32, 32));
 
             base.Initialize();
         }
