@@ -8,13 +8,11 @@ namespace RetrogradeJam.Entities.Components
     {
         public Vector2 Position;
         public Vector2 Scale;
-        public Vector2 Velocity;
 
-        public Transform(Vector2 pos, Vector2 scale, Vector2 velocity)
+        public Transform(Vector2 pos, Vector2 scale)
         {
             Position = pos;
             Scale = scale;
-            Velocity = velocity;
         }
 
         public override void Initialize()
@@ -29,12 +27,7 @@ namespace RetrogradeJam.Entities.Components
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (Velocity != Vector2.Zero) {
-                Position.X += Velocity.X * deltaTime;
-                Position.Y += Velocity.Y * deltaTime;
-            }
+            //
         }
     }
 }

@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RetrogradeJam.Entities;
-using RetrogradeJam.Entities.Components;
 
 namespace RetrogradeJam
 {
@@ -20,8 +19,8 @@ namespace RetrogradeJam
 
         public Game1()
         {
-            _entityManager = new EntityManager();
             _graphics = new GraphicsDeviceManager(this);
+            _entityManager = new EntityManager(_graphics);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -38,15 +37,6 @@ namespace RetrogradeJam
 
             _graphicsScale = Matrix.CreateScale(new Vector3(scaleX, scaleY, 1));
 
-            // @TEMP
-            Texture2D whiteRectangle = new Texture2D(_graphics.GraphicsDevice, 1, 1);
-            whiteRectangle.SetData(new[] { Color.White });
-
-            Entity testEntity = _entityManager.AddEntity("test");
-
-            testEntity.AddComponent<Transform>(new Transform(new Vector2(5, 5), new Vector2(1, 1), new Vector2(8, 8)));
-            testEntity.AddComponent<Sprite>(new Sprite(whiteRectangle, 16, 16));
-
             base.Initialize();
         }
 
@@ -54,7 +44,10 @@ namespace RetrogradeJam
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            Player player = new Player(_entityManager, "player");
+            _entityManager.AddEntity(player);
+
+            _entityManager.LoadContent(Content);
         }
 
         protected override void Update(GameTime gameTime)

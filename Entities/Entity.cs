@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using RetrogradeJam.Entities.Components;
 using System;
@@ -10,9 +11,9 @@ namespace RetrogradeJam.Entities
     {
         public bool IsActive;
 
-        private List<Component> _components = new List<Component>();
-        private Dictionary<Type, Component> _componentTypeMap = new Dictionary<Type, Component>();
-        private EntityManager _manager;
+        protected List<Component> _components = new List<Component>();
+        protected Dictionary<Type, Component> _componentTypeMap = new Dictionary<Type, Component>();
+        protected EntityManager _manager;
 
         public string Id { get; private set; }
 
@@ -20,8 +21,6 @@ namespace RetrogradeJam.Entities
         {
             _manager = manager;
             Id = entityName;
-
-            IsActive = true;
         }
 
         public T AddComponent<T>(T component) where T : Component
@@ -49,6 +48,16 @@ namespace RetrogradeJam.Entities
         public virtual void Destroy()
         {
             IsActive = false;
+        }
+
+        public virtual void Initialize()
+        {
+            IsActive = true;
+        }
+
+        public virtual void LoadContent(ContentManager content)
+        {
+            //
         }
 
         public virtual void Update(GameTime gameTime)
