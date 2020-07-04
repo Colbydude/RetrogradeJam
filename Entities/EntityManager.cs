@@ -9,12 +9,6 @@ namespace RetrogradeJam.Entities
     public class EntityManager
     {
         private List<Entity> _entities = new List<Entity>();
-        private GraphicsDeviceManager _graphics;
-
-        public EntityManager(GraphicsDeviceManager graphicsManager)
-        {
-            _graphics = graphicsManager;
-        }
 
         public Entity AddEntity(string entityName)
         {
@@ -35,14 +29,14 @@ namespace RetrogradeJam.Entities
             return entity;
         }
 
+        public void ClearEntities()
+        {
+            _entities.Clear();
+        }
+
         public Entity GetEntity(string entityName)
         {
             return _entities.Find(entity => entity.Id == entityName);
-        }
-
-        public GraphicsDeviceManager GetGraphicsDeviceManager()
-        {
-            return _graphics;
         }
 
         public void LoadContent(ContentManager content)
@@ -50,6 +44,15 @@ namespace RetrogradeJam.Entities
             _entities.ForEach(entity => {
                 entity.LoadContent(content);
             });
+        }
+
+        public void UnloadContent(ContentManager content)
+        {
+            _entities.ForEach(entity => {
+                entity.UnloadContent(content);
+            });
+
+            ClearEntities();
         }
 
         public void Update(GameTime gameTime)

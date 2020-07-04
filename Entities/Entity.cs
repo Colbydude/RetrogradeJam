@@ -60,6 +60,11 @@ namespace RetrogradeJam.Entities
             //
         }
 
+        public virtual void UnloadContent(ContentManager content)
+        {
+            //
+        }
+
         public virtual void Update(GameTime gameTime)
         {
             _components.ForEach(component => {

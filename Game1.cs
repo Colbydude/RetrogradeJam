@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RetrogradeJam.Entities;
+using RetrogradeJam.Screens;
 
 namespace RetrogradeJam
 {
@@ -12,15 +14,14 @@ namespace RetrogradeJam
         private const int WINDOW_WIDTH = 640;
         private const int WINDOW_HEIGHT = 576;
 
-        private EntityManager _entityManager;
         private GraphicsDeviceManager _graphics;
         private Matrix _graphicsScale;
+        private ScreenManager _screenManager;
         private SpriteBatch _spriteBatch;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
-            _entityManager = new EntityManager(_graphics);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -44,10 +45,13 @@ namespace RetrogradeJam
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            Player player = new Player(_entityManager, "player");
-            _entityManager.AddEntity(player);
+            // Set up screens.
+            _screenManager = new ScreenManager(Content);
 
-            _entityManager.LoadContent(Content);
+            _screenManager.AddScreen(new StartScreen(new ContentManager(Content.ServiceProvider, Content.RootDirectory), _screenManager), "Start");
+            _screenManager.AddScreen(new GameScreen(new ContentManager(Content.ServiceProvider, Content.RootDirectory), _screenManager), "Main");
+
+            _screenManager.LoadScreen("Start");
         }
 
         protected override void Update(GameTime gameTime)
@@ -56,7 +60,7 @@ namespace RetrogradeJam
                 Exit();
             }
 
-            _entityManager.Update(gameTime);
+            _screenManager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -67,7 +71,7 @@ namespace RetrogradeJam
 
             _spriteBatch.Begin(SpriteSortMode.Immediate, null, SamplerState.PointClamp, null, null, null, _graphicsScale);
 
-                _entityManager.Draw(_spriteBatch, gameTime);
+                _screenManager.Draw(_spriteBatch, gameTime);
 
             _spriteBatch.End();
 
