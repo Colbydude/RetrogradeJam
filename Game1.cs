@@ -49,7 +49,7 @@ namespace RetrogradeJam
             _screenManager = new ScreenManager(Content);
 
             _screenManager.AddScreen(new StartScreen(new ContentManager(Content.ServiceProvider, Content.RootDirectory), _screenManager), "Start");
-            _screenManager.AddScreen(new GameScreen(new ContentManager(Content.ServiceProvider, Content.RootDirectory), _screenManager), "Main");
+            _screenManager.AddScreen(new TankScreen(new ContentManager(Content.ServiceProvider, Content.RootDirectory), _screenManager), "Main");
 
             _screenManager.LoadScreen("Start");
         }
