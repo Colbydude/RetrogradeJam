@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using RetrogradeJam.Entities;
 using RetrogradeJam.Screens;
 
 namespace RetrogradeJam
@@ -48,10 +47,12 @@ namespace RetrogradeJam
             // Set up screens.
             _screenManager = new ScreenManager(Content);
 
-            _screenManager.AddScreen(new StartScreen(new ContentManager(Content.ServiceProvider, Content.RootDirectory), _screenManager), "Start");
-            _screenManager.AddScreen(new TankScreen(new ContentManager(Content.ServiceProvider, Content.RootDirectory), _screenManager), "Main");
+            _screenManager.AddScreen(new StartScreen(MakeContentManager(), _screenManager), "Start");
+            _screenManager.AddScreen(new TankScreen(MakeContentManager(), _screenManager), "Main");
+            _screenManager.AddScreen(new MapScreen(MakeContentManager(), _screenManager), "Map");
+            _screenManager.AddScreen(new BattleScreen(MakeContentManager(), _screenManager), "Battle");
 
-            _screenManager.LoadScreen("Start");
+            _screenManager.LoadScreen("Battle");
         }
 
         protected override void Update(GameTime gameTime)
@@ -76,6 +77,11 @@ namespace RetrogradeJam
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private ContentManager MakeContentManager()
+        {
+            return new ContentManager(Content.ServiceProvider, Content.RootDirectory);
         }
     }
 }
