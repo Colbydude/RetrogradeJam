@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 
 namespace RetrogradeJam.Screens
 {
@@ -22,7 +21,7 @@ namespace RetrogradeJam.Screens
         public override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter)) {
-                _screenManager.LoadScreen("Main");
+                _screenManager.LoadScreen("Battle");
             }
 
             base.Update(gameTime);

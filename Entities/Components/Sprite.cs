@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RetrogradeJam.Graphics;
-using System;
+using RetrogradeJam.Assets;
 using System.Collections.Generic;
 
 namespace RetrogradeJam.Entities.Components
@@ -19,10 +18,11 @@ namespace RetrogradeJam.Entities.Components
         private Rectangle _destinationRectangle;
         private bool _isAnimating;
         private Rectangle _sourceRectangle;
+        private SpriteEffects _spriteEffects;
         private Texture2D _texture;
         private Transform _transform;
 
-        public Sprite(Texture2D texture, int w, int h)
+        public Sprite(Texture2D texture, int w, int h, SpriteEffects spriteEffects = SpriteEffects.None)
         {
             SetTexture(texture);
             Width = w;
@@ -32,6 +32,8 @@ namespace RetrogradeJam.Entities.Components
             _animationSpeed = 0;
             _currentIndex = 0;
             _isAnimating = false;
+
+            _spriteEffects = spriteEffects;
         }
 
         public void AddAnimation(Animation animation, string animationName)
@@ -78,6 +80,7 @@ namespace RetrogradeJam.Entities.Components
         public override void Update(GameTime gameTime)
         {
             if (_isAnimating) {
+                // @TODO: Logic isn't quite working how I'd want here. Need to come back to this.
                 _animationTimer += (float) gameTime.ElapsedGameTime.TotalMilliseconds;
 
                 if (_animationTimer > _currentAnimation.Speed) {
@@ -101,7 +104,7 @@ namespace RetrogradeJam.Entities.Components
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Draw(_texture, _destinationRectangle, _sourceRectangle, Color.White);
+            spriteBatch.Draw(_texture, _destinationRectangle, _sourceRectangle, Color.White, 0, new Vector2(0, 0), _spriteEffects, 0);
         }
     }
 }

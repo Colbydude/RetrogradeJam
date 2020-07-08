@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 
 namespace RetrogradeJam.Screens
@@ -34,6 +33,7 @@ namespace RetrogradeJam.Screens
             }
 
             _currentScreen = GetScreen(screenName);
+            _currentScreen.Initialize();
             _currentScreen.LoadContent();
         }
 

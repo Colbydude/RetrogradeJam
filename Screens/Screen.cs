@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using RetrogradeJam.Entities;
-using System;
 
 namespace RetrogradeJam.Screens
 {
@@ -16,6 +15,11 @@ namespace RetrogradeJam.Screens
         {
             _content = content;
             _screenManager = screenManager;
+        }
+
+        public virtual void Initialize()
+        {
+            //
         }
 
         public virtual void LoadContent()

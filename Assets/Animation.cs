@@ -1,9 +1,4 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-
-namespace RetrogradeJam.Graphics
+namespace RetrogradeJam.Assets
 {
     public class Animation
     {
