@@ -9,27 +9,40 @@ namespace RetrogradeJam.Entities.Battle
 {
     public class BattleFish : Entity
     {
+        // Private properties.
         private FishType _fishType;
-        private Vector2 _position;
+        private bool _flipped;
         private SpriteAsset _spriteAsset;
 
-        public BattleFish(EntityManager entityManager, string entityName, FishType fishType) : base(entityManager, entityName)
+        // Component references.
+        private Sprite _sprite;
+        private Transform _transform;
+
+        public BattleFish(EntityManager entityManager, string entityName, FishType fishType, bool flipped = false) : base(entityManager, entityName)
         {
             _fishType = fishType;
+            _flipped = flipped;
 
             _spriteAsset = FishData.FishSpriteAssets[_fishType];
         }
 
         public override void LoadContent(ContentManager content)
         {
-            AddComponent<Transform>(new Transform(new Vector2(0, 0), new Vector2(1, 1)));
+            _transform = AddComponent<Transform>(new Transform(new Vector2(0, 0), new Vector2(1, 1)));
 
             Texture2D fishTexture = content.Load<Texture2D>(_spriteAsset.FileName);
-            Sprite fishSprite = AddComponent<Sprite>(new Sprite(fishTexture, (int) _spriteAsset.FrameSize.X, (int) _spriteAsset.FrameSize.Y));
+            _sprite = AddComponent<Sprite>(
+                new Sprite(
+                    fishTexture,
+                    (int) _spriteAsset.FrameSize.X,
+                    (int) _spriteAsset.FrameSize.Y,
+                    _flipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None
+                )
+            );
 
-            fishSprite.AddAnimation(_spriteAsset.Animations["Swim"], "Swim");
+            _sprite.AddAnimation(_spriteAsset.Animations["Swim"], "Swim");
 
-            fishSprite.Play("Swim");
+            _sprite.Play("Swim");
         }
     }
 }

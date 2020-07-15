@@ -7,7 +7,7 @@ namespace RetrogradeJam.Data
         Scissors
     }
 
-    public enum ColorTypes
+    public enum ColorType
     {
         Red,
         Yellow,
@@ -34,10 +34,10 @@ namespace RetrogradeJam.Data
         BubblegumClownFish,
         CreamsicleClownFish,
 
+        DesertShadeShark,
+
         LuckStarSquid,
         RadiantStarSquid,
         StarsignStarSquid,
-
-        // Shark
     }
 }

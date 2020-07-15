@@ -21,7 +21,7 @@ namespace RetrogradeJam.Screens
         public override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter)) {
-                _screenManager.LoadScreen("Battle");
+                _screenManager.LoadScreen("Main");
             }
 
             base.Update(gameTime);

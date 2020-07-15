@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RetrogradeJam.Data;
 using RetrogradeJam.Screens;
 
 namespace RetrogradeJam
@@ -51,6 +52,10 @@ namespace RetrogradeJam
             _screenManager.AddScreen(new TankScreen(MakeContentManager(), _screenManager), "Main");
             _screenManager.AddScreen(new MapScreen(MakeContentManager(), _screenManager), "Map");
             _screenManager.AddScreen(new BattleScreen(MakeContentManager(), _screenManager), "Battle");
+
+            // @TEMP
+            GameState.Instance.CurrentBattleFish = new BattleFishData(FishType.CreamsicleClownFish, ColorType.Orange, 5);
+            GameState.Instance.CurrentBattle = GameData.Battles[1];
 
             _screenManager.LoadScreen("Battle");
         }
